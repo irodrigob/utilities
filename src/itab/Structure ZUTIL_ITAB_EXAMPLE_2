@@ -1,0 +1,7 @@
+@EndUserText.label : 'Estructura ejemplo report ZUTIL_ITAB_EXAMPLE_2'
+@AbapCatalog.enhancementCategory : #NOT_EXTENSIBLE
+define type zutil_itab_example_2 {
+  navigation : lvc_s_icon;
+  field2     : abap.char(20);
+
+}
