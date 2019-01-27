@@ -12,6 +12,6 @@ The utilities are classified in folders for a better understanding
 
 Directorios / Directories:
 
-- SPOOL --> Utilidades del SPOOl / Utilities for SPOOL
+- SPOOL --> Utilidades del SPOOL / Utilities for SPOOL
 
 
