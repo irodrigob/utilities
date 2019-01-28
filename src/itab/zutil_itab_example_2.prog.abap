@@ -15,7 +15,7 @@ START-OF-SELECTION.
 * Obtenemos el puntero de la estructura
   CALL METHOD zcl_ca_dynamic_tables=>create_wa_from_struc
     EXPORTING
-      i_struc    = 'ZUTIL_ITAB_EXAMPLE_2'
+      i_struc    = 'ZUTIL_ITAB_EX2'
     IMPORTING
       e_workarea = DATA(lo_main_fields).
 
