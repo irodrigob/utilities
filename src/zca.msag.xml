@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZCA</ARBGB>
+    <MASTERLANG>E</MASTERLANG>
+    <STEXT>CA - Message class</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZCA</ARBGB>
+     <MSGNR>000</MSGNR>
+     <TEXT>&amp; &amp; &amp; &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZCA</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>El ID &amp; no existe</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZCA</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>No se puede encontrar la configuracion del archivo  para &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZCA</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>Es necesario indicar el tipo de documento</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZCA</ARBGB>
+     <MSGNR>021</MSGNR>
+     <TEXT>Error: No existe parametrizacion Archivelink valida</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZCA</ARBGB>
+     <MSGNR>022</MSGNR>
+     <TEXT>Todos los parametros son obligatorios</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZCA</ARBGB>
+     <MSGNR>023</MSGNR>
+     <TEXT>Error recuperando el listado de documentos de GOS</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZCA</ARBGB>
+     <MSGNR>024</MSGNR>
+     <TEXT>Error eliminando el documento</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZCA</ARBGB>
+     <MSGNR>052</MSGNR>
+     <TEXT>Error al eliminar el documento temporal</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZCA</ARBGB>
+     <MSGNR>053</MSGNR>
+     <TEXT>Error al recuperar el documento temporal</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZCA</ARBGB>
+     <MSGNR>055</MSGNR>
+     <TEXT>Error al anexar el documento</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>
