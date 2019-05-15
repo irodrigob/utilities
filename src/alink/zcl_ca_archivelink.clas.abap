@@ -25,68 +25,68 @@ CLASS zcl_ca_archivelink DEFINITION
         forwarder TYPE so_usr_nam,
       END OF ts_key_gos .
     TYPES:
-      BEGIN OF ty_tmp_content,
+      BEGIN OF ts_tmp_content,
         appl      TYPE zca_t_tmp_conten-appl,
         contenido TYPE zca_t_tmp_conten-contenido,
         type      TYPE zca_t_tmp_conten-type,
         name      TYPE zca_t_tmp_conten-name,
         extension TYPE zca_t_tmp_conten-extension,
-      END OF ty_tmp_content .
+      END OF ts_tmp_content .
     TYPES:
-      BEGIN OF ty_conf_alink,
+      BEGIN OF ts_conf_alink,
         sap_object TYPE saeanwdid,
         ar_object  TYPE saeobjart,
         ar_status  TYPE saearstat2,
         archiv_id  TYPE saearchivi,
         cont_cat   TYPE sdok_stcad,
         doc_type   TYPE saedoktyp,
-      END OF ty_conf_alink .
+      END OF ts_conf_alink .
     TYPES:
       tt_bapicompon TYPE STANDARD TABLE OF bapicompon .
     TYPES:
       tt_bapisignat TYPE STANDARD TABLE OF bapisignat .
 
-    CONSTANTS dc_pref_tmp_attach TYPE string VALUE 'TMP-' ##NO_TEXT.
-    CONSTANTS lc_doc_type_gos TYPE zca_e_doc_type VALUE 'G' ##NO_TEXT.
-    CONSTANTS lc_doc_type_archivelink TYPE zca_e_doc_type VALUE 'A' ##NO_TEXT.
+    CONSTANTS cv_pref_tmp_attach TYPE string VALUE 'TMP-' ##NO_TEXT.
+    CONSTANTS cv_doc_type_gos TYPE zca_e_doc_type VALUE 'G' ##NO_TEXT.
+    CONSTANTS cv_doc_type_archivelink TYPE zca_e_doc_type VALUE 'A' ##NO_TEXT.
 
     METHODS constructor
       IMPORTING
-        !i_langu TYPE sy-langu DEFAULT sy-langu .
+        !iv_langu TYPE sy-langu DEFAULT sy-langu .
     METHODS upload_file_tmp
       IMPORTING
         !is_attach   TYPE zca_s_attach
       EXPORTING
-        !e_id_attach TYPE bsstring .
+        !ev_id_attach TYPE bsstring .
     CLASS-METHODS get_attachs_http
       IMPORTING
         !io_server  TYPE REF TO if_http_server
       EXPORTING
-        !e_t_attach TYPE zca_i_attach .
+        !et_attach TYPE zca_i_attach .
     METHODS conv_tmp_file_2_alink
       IMPORTING
-        !i_object_id            TYPE any
-        !i_tmp_id               TYPE any
-        !i_object_alink         TYPE saeanwdid
-        !i_pref_ar_object       TYPE saeobjart
-        !i_dont_delete_tmp_file TYPE abap_bool DEFAULT abap_false
+        !iv_object_id            TYPE any
+        !iv_tmp_id               TYPE any
+        !iv_object_alink         TYPE saeanwdid
+        !iv_pref_ar_object       TYPE saeobjart
+        !iv_dont_delete_tmp_file TYPE abap_bool DEFAULT abap_false
       EXPORTING
-        !e_alink_id             TYPE saeardoid
-        !e_return               TYPE bapiret2 .
-    CLASS-METHODS get_url_image
+        !ev_alink_id             TYPE saeardoid
+        !es_return               TYPE bapiret2 .
+    CLASS-METHODS get_url_file
       IMPORTING
-        !i_alink_id     TYPE any
-        !i_object_alink TYPE saeanwdid
+        !iv_alink_id     TYPE any
+        !iv_object_alink TYPE saeanwdid
       RETURNING
-        VALUE(r_url)    TYPE string .
+        VALUE(rv_url)    TYPE string .
     METHODS delete_file_alink
       IMPORTING
-        !i_alink_id       TYPE saeardoid
+        !iv_alink_id       TYPE saeardoid
         !iv_ar_object     TYPE saeobjart OPTIONAL
         !iv_object_id     TYPE saeobjid OPTIONAL
-        !i_object_alink   TYPE saeanwdid
+        !iv_object_alink   TYPE saeanwdid
       RETURNING
-        VALUE(r_t_return) TYPE bapiret2_t .
+        VALUE(rt_return) TYPE bapiret2_t .
     METHODS upload_file_2_alink
       IMPORTING
         !iv_filename       TYPE string
@@ -99,22 +99,22 @@ CLASS zcl_ca_archivelink DEFINITION
         !iv_descr          TYPE toaat-descr OPTIONAL
         !iv_creator        TYPE toaat-creator DEFAULT sy-uname
       EXPORTING
-        !e_alink_id        TYPE saeardoid
-        !e_ar_object       TYPE saeobjart
-        !e_archiv_id       TYPE saearchivi
-        !e_doc_type        TYPE saedoktyp
-        !e_return          TYPE bapiret2 .
+        !ev_alink_id        TYPE saeardoid
+        !ev_ar_object       TYPE saeobjart
+        !ev_archiv_id       TYPE saearchivi
+        !ev_doc_type        TYPE saedoktyp
+        !es_return          TYPE bapiret2 .
     CLASS-METHODS get_url_file_alink
       IMPORTING
-        !i_alink_id   TYPE any
-        !i_sap_object TYPE saeanwdid
-        !i_arc_doc_id TYPE saeardoid OPTIONAL
-        !i_archiv_id  TYPE saearchivi OPTIONAL
+        !iv_alink_id   TYPE any
+        !iv_sap_object TYPE saeanwdid
+        !iv_arc_doc_id TYPE saeardoid OPTIONAL
+        !iv_archiv_id  TYPE saearchivi OPTIONAL
         !iv_local_url TYPE sap_bool DEFAULT abap_false
         !iv_ar_object TYPE saeobjart OPTIONAL
         !iv_http      TYPE sap_bool DEFAULT abap_false
       RETURNING
-        VALUE(r_url)  TYPE string .
+        VALUE(rv_url)  TYPE string .
     CLASS-METHODS get_url_object_gos
       IMPORTING
         !is_key       TYPE ts_key_gos
@@ -138,8 +138,8 @@ CLASS zcl_ca_archivelink DEFINITION
         !ev_mimetype   TYPE any
         !ev_doc_type   TYPE any
       EXCEPTIONS
-        error_parameter
-        no_data .
+        ex_error_parameter
+        ex_no_data .
     METHODS get_object_content_gos
       IMPORTING
         !is_key      TYPE ts_key_gos
@@ -257,7 +257,7 @@ CLASS zcl_ca_archivelink DEFINITION
 *"* do not include other source files here!!!
 
     TYPES:
-      BEGIN OF ty_toa,
+      BEGIN OF ts_toa,
         sap_object TYPE saeanwdid,
         object_id  TYPE saeobjid,
         archiv_id  TYPE saearchivi,
@@ -266,7 +266,7 @@ CLASS zcl_ca_archivelink DEFINITION
         ar_date    TYPE saeabadate,
         del_date   TYPE saedeldate,
         reserve    TYPE saereserve,
-      END OF ty_toa .
+      END OF ts_toa .
     TYPES:
       tt_connection TYPE TABLE OF saeverkn .
     TYPES:
@@ -292,7 +292,7 @@ CLASS zcl_ca_archivelink DEFINITION
 
     CONSTANTS dc_msg_type_error TYPE bapi_mtype VALUE 'E'.  "#EC NOTEXT
     CONSTANTS dc_ca_id TYPE symsgid VALUE 'ZCA'.            "#EC NOTEXT
-    DATA d_langu TYPE sylangu .
+    DATA mv_langu TYPE sylangu .
   PRIVATE SECTION.
 *"* private components of class ZCL_CA_ARCHIVELINK
 *"* do not include other source files here!!!
@@ -304,17 +304,17 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
 
 
   METHOD constructor.
-    d_langu = i_langu.
+    mv_langu = iv_langu.
   ENDMETHOD.                    "CONSTRUCTOR
 
 
   METHOD conv_tmp_file_2_alink.
 
     FIELD-SYMBOLS <ls_binary> TYPE tbl1024.
-    DATA ls_tmp_content TYPE ty_tmp_content.
+    DATA ls_tmp_content TYPE ts_tmp_content.
     DATA lt_binary TYPE TABLE OF tbl1024.
     DATA ld_doc_type TYPE toave-doc_type.
-    DATA ls_config_alink TYPE ty_conf_alink.
+    DATA ls_config_alink TYPE ts_conf_alink.
     DATA ld_ar_object TYPE saeobjart.
     DATA ld_doc_id TYPE saeardoid.
     DATA ld_object_id TYPE saeobjid.
@@ -323,11 +323,11 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
     DATA ld_length_tmp TYPE i.
     DATA ld_filename TYPE toaat-filename.
 
-    CLEAR: e_return, e_alink_id.
+    CLEAR: es_return, ev_alink_id.
 
 * Le quito el prefijo temporal para poder buscarlo en la tabla
-    ld_tmp_id = i_tmp_id.
-    REPLACE ALL OCCURRENCES OF dc_pref_tmp_attach IN ld_tmp_id WITH ''.
+    ld_tmp_id = iv_tmp_id.
+    REPLACE ALL OCCURRENCES OF cv_pref_tmp_attach IN ld_tmp_id WITH ''.
 
     SELECT SINGLE appl contenido type name extension INTO ls_tmp_content
     FROM zca_t_tmp_conten
@@ -337,14 +337,14 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
     IF sy-subrc = 0.
 
 * Monto la clase de documento donde irá el fichero.
-      CONCATENATE i_pref_ar_object ls_tmp_content-extension INTO ld_ar_object.
+      CONCATENATE iv_pref_ar_object ls_tmp_content-extension INTO ld_ar_object.
       TRANSLATE ld_ar_object TO UPPER CASE.
 
 * Busco la configuración del archivado
       SELECT SINGLE sap_object ar_object ar_status archiv_id cont_cat
                     doc_type INTO ls_config_alink
       FROM toaom
-      WHERE sap_object = i_object_alink
+      WHERE sap_object = iv_object_alink
       AND ar_object  = ld_ar_object
       AND ar_status = abap_true.
       IF sy-subrc = 0.
@@ -383,7 +383,7 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
             OTHERS                   = 5.
         IF sy-subrc = 0.
 
-          ld_object_id = i_object_id. " ID que tendra el archivado(numero magazine, etc.)
+          ld_object_id = iv_object_id. " ID que tendra el archivado(numero magazine, etc.)
           ld_filename  = ls_tmp_content-name.
 
 * Finalmente se guarda el documento
@@ -401,18 +401,18 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
               OTHERS                = 2.
           IF sy-subrc = 0.
 
-            e_alink_id = ld_doc_id.
+            ev_alink_id = ld_doc_id.
 
 * Finalmente borro el archivo temporal
-            IF i_dont_delete_tmp_file EQ abap_false.
+            IF iv_dont_delete_tmp_file EQ abap_false.
               DELETE FROM zca_t_tmp_conten
               WHERE id = ld_tmp_id.
             ENDIF.
           ELSE.
-            e_return = zcl_ca_utilities=>fill_return( iv_type = dc_msg_type_error
+            es_return = zcl_ca_utilities=>fill_return( iv_type = dc_msg_type_error
                                                        iv_id = sy-msgid
                                                        iv_number = sy-msgno
-                                                       iv_langu = d_langu
+                                                       iv_langu = mv_langu
                                                        iv_message_v1 = sy-msgv1
                                                        iv_message_v2 = sy-msgv2
                                                        iv_message_v3 = sy-msgv3
@@ -420,10 +420,10 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
           ENDIF.
 
         ELSE.
-          e_return = zcl_ca_utilities=>fill_return( iv_type = dc_msg_type_error
+          es_return = zcl_ca_utilities=>fill_return( iv_type = dc_msg_type_error
                                                      iv_id = sy-msgid
                                                      iv_number = sy-msgno
-                                                     iv_langu = d_langu
+                                                     iv_langu = mv_langu
                                                      iv_message_v1 = sy-msgv1
                                                      iv_message_v2 = sy-msgv2
                                                      iv_message_v3 = sy-msgv3
@@ -431,18 +431,18 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
         ENDIF.
 
       ELSE.
-        e_return = zcl_ca_utilities=>fill_return( iv_type = dc_msg_type_error
+        es_return = zcl_ca_utilities=>fill_return( iv_type = dc_msg_type_error
                                                    iv_id = dc_ca_id
                                                    iv_number = '002'
-                                                   iv_langu = d_langu
+                                                   iv_langu = mv_langu
                                                    iv_message_v1 = ls_tmp_content-appl ).
       ENDIF.
     ELSE.
-      e_return = zcl_ca_utilities=>fill_return( iv_type = dc_msg_type_error
+      es_return = zcl_ca_utilities=>fill_return( iv_type = dc_msg_type_error
                                                  iv_id = dc_ca_id
                                                  iv_number = '001'
-                                                 iv_langu = d_langu
-                                                 iv_message_v1 = i_tmp_id ).
+                                                 iv_langu = mv_langu
+                                                 iv_message_v1 = iv_tmp_id ).
     ENDIF.
 
 
@@ -476,12 +476,12 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
         ld_alink_id = iv_doc_id.
         CALL METHOD delete_file_alink
           EXPORTING
-            i_alink_id     = ld_alink_id
-            i_object_alink = iv_sap_object
+            iv_alink_id     = ld_alink_id
+            iv_object_alink = iv_sap_object
             iv_object_id   = iv_object_id
             iv_ar_object   = iv_ar_object
           RECEIVING
-            r_t_return     = lt_bapiret.
+            rt_return     = lt_bapiret.
 
         IF lt_bapiret IS NOT INITIAL.
           READ TABLE lt_bapiret INTO es_return INDEX 1.
@@ -491,7 +491,7 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
         es_return = zcl_ca_utilities=>fill_return( iv_type = dc_msg_type_error
                                                     iv_id = dc_ca_id
                                                     iv_number = '010'
-                                                    iv_langu = d_langu  ).
+                                                    iv_langu = mv_langu  ).
       ENDIF.
     ENDIF.
 
@@ -506,13 +506,13 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
 *  interferir en el funcionamiento actual                                                        *
 **************************************************************************************************
 
-    DATA ls_toa TYPE ty_toa.
+    DATA ls_toa TYPE ts_toa.
     DATA ls_return TYPE bapiret2.
     DATA ls_toaom TYPE ts_toaom.
 
     DATA: lv_connection TYPE saeverkn.
 
-    CLEAR r_t_return.
+    CLEAR rt_return.
 
 * INS 31102017
     IF iv_ar_object IS SUPPLIED AND
@@ -522,7 +522,7 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
 
       SELECT SINGLE * INTO CORRESPONDING FIELDS OF ls_toaom
         FROM toaom
-        WHERE sap_object EQ i_object_alink AND
+        WHERE sap_object EQ iv_object_alink AND
               ar_object EQ iv_ar_object.
 
       IF sy-subrc IS INITIAL.
@@ -530,8 +530,8 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
         SELECT SINGLE sap_object object_id archiv_id arc_doc_id ar_object ar_date del_date reserve
           INTO ls_toa
           FROM (ls_toaom-connection)
-          WHERE sap_object EQ i_object_alink AND
-                arc_doc_id EQ i_alink_id AND
+          WHERE sap_object EQ iv_object_alink AND
+                arc_doc_id EQ iv_alink_id AND
                 object_id  EQ iv_object_id.
 
       ENDIF.
@@ -541,8 +541,8 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
       SELECT SINGLE sap_object object_id archiv_id arc_doc_id ar_object ar_date del_date reserve
              INTO ls_toa
              FROM toa01
-             WHERE sap_object = i_object_alink
-               AND arc_doc_id = i_alink_id. "object_id = i_alink_id.
+             WHERE sap_object = iv_object_alink
+               AND arc_doc_id = iv_alink_id. "object_id = i_alink_id.
 
     ENDIF. " INS 31102017
 
@@ -563,7 +563,7 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
 *         ALL_CONNECTIONS_DELETED  =
         EXCEPTIONS
           error_connectiontable    = 1
-          error_parameter          = 2
+          ex_error_parameter          = 2
           error_archiv             = 3
           error_kernel             = 4
           error_communicationtable = 5
@@ -574,21 +574,21 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
         ls_return = zcl_ca_utilities=>fill_return( iv_type = dc_msg_type_error
                                                      iv_id = sy-msgid
                                                      iv_number = sy-msgno
-                                                     iv_langu = d_langu
+                                                     iv_langu = mv_langu
                                                      iv_message_v1 = sy-msgv1
                                                      iv_message_v2 = sy-msgv2
                                                      iv_message_v3 = sy-msgv3
                                                      iv_message_v4 = sy-msgv4 ).
-        INSERT ls_return INTO TABLE r_t_return.
+        INSERT ls_return INTO TABLE rt_return.
       ENDIF.
 
     ELSE.
       ls_return = zcl_ca_utilities=>fill_return( iv_type = dc_msg_type_error
                                         iv_id = dc_ca_id
                                         iv_number = '001'
-                                        iv_langu = d_langu
-                                        iv_message_v1 = i_alink_id ).
-      INSERT ls_return INTO TABLE r_t_return.
+                                        iv_langu = mv_langu
+                                        iv_message_v1 = iv_alink_id ).
+      INSERT ls_return INTO TABLE rt_return.
     ENDIF.
   ENDMETHOD.                    "delete_file_alink
 
@@ -697,7 +697,7 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
         es_return = zcl_ca_utilities=>fill_return( iv_type = dc_msg_type_error
                                                     iv_id = dc_ca_id
                                                     iv_number = '024'
-                                                    iv_langu = d_langu  ).
+                                                    iv_langu = mv_langu  ).
       ENDIF.
 
     ELSE.
@@ -705,7 +705,7 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
       es_return = zcl_ca_utilities=>fill_return( iv_type = dc_msg_type_error
                                                     iv_id = dc_ca_id
                                                     iv_number = '024'
-                                                    iv_langu = d_langu  ).
+                                                    iv_langu = mv_langu  ).
     ENDIF.
     COMMIT WORK.
   ENDMETHOD.                    "delete_file_gos
@@ -824,7 +824,7 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
       es_return = zcl_ca_utilities=>fill_return( iv_type = dc_msg_type_error
                                                   iv_id = dc_ca_id
                                                   iv_number = '022'
-                                                  iv_langu = d_langu  ).
+                                                  iv_langu = mv_langu  ).
       EXIT.
     ENDIF.
 
@@ -854,7 +854,7 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
       es_return = zcl_ca_utilities=>fill_return( iv_type = dc_msg_type_error
                                                   iv_id = dc_ca_id
                                                   iv_number = '021'
-                                                  iv_langu = d_langu ).
+                                                  iv_langu = mv_langu ).
     ENDIF.
 
     SORT lt_toaom DESCENDING.
@@ -901,10 +901,10 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
 
         IF iv_get_url EQ abap_true.
 
-          <ls_al_document>-url = zcl_ca_archivelink=>get_url_file_alink( i_alink_id = <ls_enlace>-object_id
-                                                                         i_sap_object = iv_sap_object
-                                                                         i_arc_doc_id = <ls_enlace>-arc_doc_id
-                                                                         i_archiv_id =  <ls_enlace>-archive_id
+          <ls_al_document>-url = zcl_ca_archivelink=>get_url_file_alink( iv_alink_id = <ls_enlace>-object_id
+                                                                         iv_sap_object = iv_sap_object
+                                                                         iv_arc_doc_id = <ls_enlace>-arc_doc_id
+                                                                         iv_archiv_id =  <ls_enlace>-archive_id
                                                                          iv_local_url = iv_local_url
                                                                          iv_ar_object = <ls_enlace>-ar_object
                                                                          iv_http      = iv_http ).
@@ -925,7 +925,7 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
     DATA ls_r_object_id LIKE LINE OF lt_r_object_id.
     DATA lt_r_alink_id TYPE RANGE OF saeardoid.
     DATA ls_r_alink_id LIKE LINE OF lt_r_alink_id.
-    DATA ls_toa TYPE ty_toa.
+    DATA ls_toa TYPE ts_toa.
     DATA ld_length TYPE sapb-length.
     DATA lt_content TYPE STANDARD TABLE OF tbl1024.
     DATA ld_length_int TYPE i.
@@ -997,7 +997,7 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
 
           TRANSLATE ev_doc_type TO UPPER CASE.
         ELSE.
-          RAISE no_data.
+          RAISE ex_no_data.
         ENDIF.
       ENDIF.
     ENDIF.
@@ -1015,7 +1015,7 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
     DATA lt_header_fields TYPE tihttpnvp.
     DATA lt_extension TYPE STANDARD TABLE OF string.
 
-    CLEAR e_t_attach.
+    CLEAR et_attach.
 
 * Obtengo el numero de entidades de la cabecera.
     ld_num_multipart = io_server->request->num_multiparts( ).
@@ -1044,7 +1044,7 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
 
 * Contenido
         ls_attach-content = lo_entity->get_data( ).
-        INSERT ls_attach INTO TABLE e_t_attach.
+        INSERT ls_attach INTO TABLE et_attach.
       ENDIF.
 
       ld_cont = ld_cont + 1.
@@ -1178,15 +1178,15 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
             ev_doc_type     = ev_doc_type
             ev_filename     = ev_filename
           EXCEPTIONS
-            error_parameter = 1
-            no_data         = 2
+            ex_error_parameter = 1
+            ex_no_data         = 2
             OTHERS          = 3.
 
       ELSE.
         es_return = zcl_ca_utilities=>fill_return( iv_type = dc_msg_type_error
                                                     iv_id = dc_ca_id
                                                     iv_number = '010'
-                                                    iv_langu = d_langu  ).
+                                                    iv_langu = mv_langu  ).
       ENDIF.
     ENDIF.
   ENDMETHOD.                    "get_document_data
@@ -1222,7 +1222,7 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
       LOOP AT lt_gos_documents ASSIGNING <ls_gos_document>.
         APPEND INITIAL LINE TO et_document_list ASSIGNING <ls_document_list>.
         <ls_document_list>-doc_id    = <ls_gos_document>-loio_id.
-        <ls_document_list>-doc_type  = me->lc_doc_type_gos.
+        <ls_document_list>-doc_type  = me->cv_doc_type_gos.
         <ls_document_list>-filename  = <ls_gos_document>-filename.
         <ls_document_list>-url       = <ls_gos_document>-url.
         <ls_document_list>-crea_user = <ls_gos_document>-crea_user.
@@ -1249,7 +1249,7 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
 
         APPEND INITIAL LINE TO et_document_list ASSIGNING <ls_document_list>.
         <ls_document_list>-doc_id    = <ls_alink_document>-arc_doc_id.
-        <ls_document_list>-doc_type  = me->lc_doc_type_archivelink.
+        <ls_document_list>-doc_type  = me->cv_doc_type_archivelink.
         <ls_document_list>-filename  = <ls_alink_document>-filename.
         <ls_document_list>-descr     = <ls_alink_document>-descr.
 *      <ls_document_list>-archiv_id = <ls_alink_document>-archiv_id.
@@ -1386,7 +1386,7 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
       es_return = zcl_ca_utilities=>fill_return( iv_type = dc_msg_type_error
                                                   iv_id = dc_ca_id
                                                   iv_number = '022'
-                                                  iv_langu = d_langu  ).
+                                                  iv_langu = mv_langu  ).
       EXIT.
     ENDIF.
 
@@ -1409,7 +1409,7 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
       es_return = zcl_ca_utilities=>fill_return( iv_type = dc_msg_type_error
                                                    iv_id = dc_ca_id
                                                    iv_number = '023'
-                                                   iv_langu = d_langu  ).
+                                                   iv_langu = mv_langu  ).
     ENDIF.
 
     LOOP AT lt_connections ASSIGNING <ls_connections>.
@@ -1511,28 +1511,28 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
     DATA lv_mimetype TYPE string.
     DATA lv_doc_type TYPE string.
     DATA lv_service TYPE string.
-    DATA ls_toa TYPE ty_toa.
+    DATA ls_toa TYPE ts_toa.
     DATA ld_abs_uri TYPE c LENGTH 500." 255.
     DATA ld_http_uri TYPE c LENGTH 500. "255.
     DATA lo_alink TYPE REF TO zcl_ca_archivelink.
     DATA lv_alink_id TYPE saeobjid.
 
-    CLEAR r_url.
+    CLEAR rv_url.
 
     IF iv_ar_object IS NOT INITIAL.
       ls_toa-ar_object = iv_ar_object.
     ENDIF.
 
-    IF i_arc_doc_id IS NOT INITIAL AND
-       i_archiv_id IS NOT INITIAL.
-      ls_toa-archiv_id  = i_archiv_id.
-      ls_toa-arc_doc_id = i_arc_doc_id.
+    IF iv_arc_doc_id IS NOT INITIAL AND
+       iv_archiv_id IS NOT INITIAL.
+      ls_toa-archiv_id  = iv_archiv_id.
+      ls_toa-arc_doc_id = iv_arc_doc_id.
     ELSE.
       SELECT SINGLE sap_object object_id archiv_id arc_doc_id ar_object ar_date del_date reserve
         INTO ls_toa
         FROM toa01
-        WHERE sap_object = i_sap_object
-        AND arc_doc_id = i_alink_id.
+        WHERE sap_object = iv_sap_object
+        AND arc_doc_id = iv_alink_id.
 
     ENDIF.
     IF sy-subrc = 0.
@@ -1550,16 +1550,16 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
             absolute_uri = ld_abs_uri
             http_uri     = ld_http_uri.
 
-        r_url = ld_abs_uri.
+        rv_url = ld_abs_uri.
 
       ELSE.
 
         CREATE OBJECT lo_alink.
-        lv_alink_id = i_alink_id.
+        lv_alink_id = iv_alink_id.
         CALL METHOD lo_alink->get_alink_file_data
           EXPORTING
             iv_alink_id     = ls_toa-arc_doc_id
-            iv_sap_object   = i_sap_object
+            iv_sap_object   = iv_sap_object
             iv_object_id    = lv_alink_id
             iv_ar_object    = ls_toa-ar_object
           IMPORTING
@@ -1568,8 +1568,8 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
             ev_mimetype     = lv_mimetype
             ev_doc_type     = lv_doc_type
           EXCEPTIONS
-            error_parameter = 1
-            no_data         = 2
+            ex_error_parameter = 1
+            ex_no_data         = 2
             OTHERS          = 3.
         IF sy-subrc = 0.
           lv_service = ls_toa-arc_doc_id.
@@ -1581,7 +1581,7 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
               iv_doc_name = lv_filename
               iv_http     = iv_http
             IMPORTING
-              ev_url     = r_url ).
+              ev_url     = rv_url ).
 
         ENDIF.
 
@@ -1594,20 +1594,20 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
   ENDMETHOD.                    "get_url_file_alink
 
 
-  METHOD get_url_image.
+  METHOD get_url_file.
 
-    DATA ls_toa TYPE ty_toa.
+    DATA ls_toa TYPE ts_toa.
     DATA ld_abs_uri TYPE c LENGTH 255.
     DATA ld_http_uri TYPE c LENGTH 255.
     DATA lt_toaom_connections TYPE STANDARD TABLE OF ts_toaom.
-    CLEAR r_url.
+    CLEAR rv_url.
 
     FIELD-SYMBOLS: <ls_toaom_connections> LIKE LINE OF lt_toaom_connections.
 
     SELECT *
       INTO CORRESPONDING FIELDS OF TABLE lt_toaom_connections
       FROM toaom
-      WHERE sap_object EQ i_object_alink.
+      WHERE sap_object EQ iv_object_alink.
 
     SORT lt_toaom_connections DESCENDING.
     DELETE ADJACENT DUPLICATES FROM lt_toaom_connections.
@@ -1617,8 +1617,8 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
           SELECT SINGLE sap_object object_id archiv_id arc_doc_id ar_object ar_date del_date reserve
           INTO ls_toa
           FROM (<ls_toaom_connections>-connection) "toa01
-          WHERE sap_object = i_object_alink
-          AND arc_doc_id = i_alink_id.
+          WHERE sap_object = iv_object_alink
+          AND arc_doc_id = iv_alink_id.
 
 
           IF sy-subrc = 0.
@@ -1636,7 +1636,7 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
                 absolute_uri = ld_abs_uri
                 http_uri     = ld_http_uri.
 
-            r_url = ld_abs_uri.
+            rv_url = ld_abs_uri.
             EXIT.
           ENDIF.
         CATCH cx_root.
@@ -1712,7 +1712,7 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
            lv_object_id    TYPE saeobjid,
            lv_filename     TYPE toaat-filename,
            lv_description  TYPE toaat-descr,
-           ls_config_alink TYPE ty_conf_alink.
+           ls_config_alink TYPE ts_conf_alink.
 
     " Obtener extensión del fichero
     IF iv_track = abap_false.
@@ -1793,19 +1793,19 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
 
         IF sy-subrc = 0.
 
-          e_alink_id = lv_doc_id.
-          e_ar_object = ls_config_alink-ar_object.
-          e_archiv_id = ls_config_alink-archiv_id.
-          e_doc_type = ls_config_alink-doc_type.
+          ev_alink_id = lv_doc_id.
+          ev_ar_object = ls_config_alink-ar_object.
+          ev_archiv_id = ls_config_alink-archiv_id.
+          ev_doc_type = ls_config_alink-doc_type.
 
 * Finalmente borro el archivo temporal
 *        DELETE FROM zca_t_tmp_conten
 *        WHERE id = ld_tmp_id.
         ELSE.
-          e_return = zcl_ca_utilities=>fill_return( iv_type = dc_msg_type_error
+          es_return = zcl_ca_utilities=>fill_return( iv_type = dc_msg_type_error
                                                      iv_id = sy-msgid
                                                      iv_number = sy-msgno
-                                                     iv_langu = d_langu
+                                                     iv_langu = mv_langu
                                                      iv_message_v1 = sy-msgv1
                                                      iv_message_v2 = sy-msgv2
                                                      iv_message_v3 = sy-msgv3
@@ -1813,10 +1813,10 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
         ENDIF.
 
       ELSE.
-        e_return = zcl_ca_utilities=>fill_return( iv_type = dc_msg_type_error
+        es_return = zcl_ca_utilities=>fill_return( iv_type = dc_msg_type_error
                                                    iv_id = sy-msgid
                                                    iv_number = sy-msgno
-                                                   iv_langu = d_langu
+                                                   iv_langu = mv_langu
                                                    iv_message_v1 = sy-msgv1
                                                    iv_message_v2 = sy-msgv2
                                                    iv_message_v3 = sy-msgv3
@@ -1824,10 +1824,10 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
       ENDIF.
 
     ELSE.
-      e_return = zcl_ca_utilities=>fill_return( iv_type = dc_msg_type_error
+      es_return = zcl_ca_utilities=>fill_return( iv_type = dc_msg_type_error
                                                  iv_id = dc_ca_id
                                                  iv_number = '002'
-                                                 iv_langu = d_langu
+                                                 iv_langu = mv_langu
                                                  iv_message_v1 = iv_object_alink ).
     ENDIF.
 
@@ -1975,7 +1975,7 @@ CLASS zcl_ca_archivelink IMPLEMENTATION.
       INSERT ls_content INTO TABLE lt_content.
 
 * Pongo el ID del fichero generado con un prefijo para saber a posterior si es temporal o no.
-      CONCATENATE dc_pref_tmp_attach ls_content-id INTO e_id_attach.
+      CONCATENATE cv_pref_tmp_attach ls_content-id INTO ev_id_attach.
 
 
       MODIFY zca_t_tmp_conten FROM TABLE lt_content.
