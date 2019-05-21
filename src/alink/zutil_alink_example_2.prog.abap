@@ -1,9 +1,9 @@
 *&---------------------------------------------------------------------*
-*& Report zutil_alink_example_1
+*& Report zutil_alink_example_2
 *&---------------------------------------------------------------------*
-*& Description: Example of uploading a document as temporary
+*& Description: Example of document upload to GOS
 *&---------------------------------------------------------------------*
-REPORT zutil_alink_example_1.
+REPORT zutil_alink_example_2.
 
 DATA lt_files TYPE filetable.
 DATA lv_rc TYPE i.
@@ -11,7 +11,11 @@ DATA mt_file_bin TYPE solix_tab.
 DATA mv_file_content TYPE xstring.
 DATA mv_file_name TYPE string.
 
-PARAMETERS: p_file TYPE rlgrap-filename OBLIGATORY.
+PARAMETERS: p_file TYPE rlgrap-filename OBLIGATORY,
+            p_sapobj  type saeanwdid OBLIGATORY DEFAULT 'ZTEST_GOS',
+            p_obj_id  type saeobjid OBLIGATORY.
+
+
 
 
 AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_file.
@@ -90,16 +94,20 @@ START-OF-SELECTION.
     " Get the mimetype
     SELECT SINGLE type INTO @DATA(lv_mimetype) FROM sdokfext WHERE extension = @lv_extension.
 
-    " Fill the structure with the values of temporary data
-    DATA(ls_attach) = VALUE zca_s_attach( appl = 'TEST' filename = mv_file_name extension = lv_extension mimetype = lv_mimetype content = mv_file_content ).
+    " Fill the structure with the values of document
+    DATA(ls_attach) = VALUE zca_t_tmp_conten( appl = 'TEST' name = mv_file_name type = lv_mimetype contenido = mv_file_content ).
 
-    " Save temporary data
-    NEW zcl_ca_archivelink( )->upload_file_tmp(
-      EXPORTING
-        is_attach    = ls_attach
-      IMPORTING
-        ev_id_attach = DATA(lv_id_attach) ).
+    " Upload document
+    NEW zcl_ca_archivelink( )->upload_file_2_gos( EXPORTING iv_langu       = sy-langu
+                                                   is_attach      = ls_attach
+                                                   iv_sap_object  = p_sapobj
+                                                   iv_object_id   = p_obj_id
+                                         IMPORTING es_return      = DATA(ls_return) ).
 
-   " next steps: transfer the temporary data to archivelink with the method conv_tmp_file_2_alink
+    IF ls_return-type = 'E'.
+      WRITE:/ ls_return-message.
+    ELSE.
+      WRITE:/ 'Upload succesfully'.
+    ENDIF.
 
   ENDIF.
