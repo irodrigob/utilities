@@ -17,4 +17,4 @@ Directorios / Directories:
 * HTTP -->Utilidades en comunicaciones HTTP / Utilities for HTTP comunications
 * ALINK --> Utilidades para Archivelink/GOS/Otros / Utilities for Archivelinki/GOS/Others   
 
-En la pestaña de Wiki encontrarás más detalle de cada utilidad / n the Wiki tab you will find more detail of each utility
+En la pestaña de Wiki encontrarás más detalle de cada utilidad / In the Wiki tab you will find more detail of each utility
