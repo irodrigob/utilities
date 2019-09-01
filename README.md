@@ -1,9 +1,14 @@
-# generic_utilities
+# Objetivo /Objective
 Conjunto de utilidades genéricas de distintos ámbitos: spool, conversiones, etc. 
 
 / 
 
 Set of generic utilities from different areas: spool, conversions, etc.
+
+
+# Prerequisitos / Prerequisites
+
+Versión ABAP 7.4 o superior / ABAP 7.4 or higher
 
 # ¿Que utilidades hay? / What utilities are there?
 
